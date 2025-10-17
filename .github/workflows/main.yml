@@ -1,0 +1,27 @@
+name: GAP Size Monitor
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+    
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 regex
+      - name: Run checker
+        env:
+          PRODUCT_URL: ${{ secrets.PRODUCT_URL }}
+          TARGET_SIZE: ${{ secrets.TARGET_SIZE }}
+          WEBHOOK: ${{ secrets.WEBHOOK }}
+        run: |
+          python check_gap_stock.py --url "$PRODUCT_URL" --size "$TARGET_SIZE" --webhook "$WEBHOOK" --quiet
