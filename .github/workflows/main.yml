@@ -24,4 +24,4 @@ jobs:
           TARGET_SIZE: ${{ secrets.TARGET_SIZE }}
           WEBHOOK: ${{ secrets.WEBHOOK }}
         run: |
-          python check_gap_stock.py --url "$PRODUCT_URL" --size "$TARGET_SIZE" --webhook "$WEBHOOK" --quiet
+          python check_gap_stock.py --url "$PRODUCT_URL" --size "$TARGET_SIZE" --webhook "$WEBHOOK" --always_notify
